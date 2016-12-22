@@ -1,0 +1,27 @@
+---
+
+- name: (mysql_install) [1/4] MySQL/MariaDB packages are installed and the latest version
+  package:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - mariadb-server
+    - MySQL-python
+
+- name: (mysql_install) [2/4] MariaDB enabled on boot
+  service:
+    name: mariadb
+    state: started
+    enabled: yes
+
+- name: (mysql_install) [3/4] MySQL database {{ mysql_dbname }} is present
+  mysql_db:
+    name: "{{ mysql_dbname }}"
+    state: present
+
+- name: (mysql_install) [4/4] Mailuser account present for mailserver database
+  mysql_user:
+    name: "{{ mysql_dbuser }}"
+    password: "{{ mysql_dbpasswd }}"
+    priv: mailserver.*:SELECT,INSERT,UPDATE,DELETE
+    state: present

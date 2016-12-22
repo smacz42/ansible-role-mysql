@@ -1,0 +1,13 @@
+---
+# Tasks for MySQL
+
+- include: mysql_install.yml
+  tags: [mysql,mysql_install,install]
+
+- include: mysql_config_schema.yml
+  tags: [mysql,mysql_config,config]
+  when: mysql_schema is defined
+
+- include: mysql_config_data.yml
+  tags: [mysql,mysql_config,config]
+  when: mysql_data is defined

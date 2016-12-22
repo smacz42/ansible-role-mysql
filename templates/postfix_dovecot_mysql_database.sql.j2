@@ -1,0 +1,32 @@
+REPLACE INTO `mailserver`.`virtual_domains` (
+    `id` ,
+    `name`
+)
+VALUES
+{% for domain in postfix_mysql_virtual_domains %}
+    ( '{{ domain.domain_id }}', '{{ domain.domain_name }}')
+    {% if loop.last %};{% else %},{% endif %}
+{% endfor %}
+
+REPLACE INTO `mailserver`.`virtual_users` (
+    `id` ,
+    `domain_id` ,
+    `password` ,
+    `email`
+)
+VALUES
+{% for user in postfix_mysql_virtual_users %}
+   ( '{{ loop.index }}', '{{ user.domain_id }}', '{{ user.password }}' , '{{ user.email }}' )
+    {% if loop.last %};{% else %},{% endif %}
+{% endfor %}
+REPLACE INTO `mailserver`.`virtual_aliases` (
+    `id`,
+    `domain_id`,
+    `source`,
+    `destination`
+)
+VALUES
+{% for alias in postfix_mysql_virtual_aliases %}
+   ( '{{ loop.index }}', '{{ alias.domain_id }}', '{{ alias.source }}', '{{ alias.email }}' )
+    {% if loop.last %};{% else %},{% endif %}
+{% endfor %}
