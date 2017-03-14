@@ -10,4 +10,4 @@
 
 - include: mysql_config_data.yml
   tags: [mysql,mysql_config,config]
-  when: mysql_data is defined
+  when: mysql_database is defined

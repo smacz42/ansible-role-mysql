@@ -23,5 +23,5 @@
   mysql_user:
     name: "{{ mysql_dbuser }}"
     password: "{{ mysql_dbpasswd }}"
-    priv: mailserver.*:SELECT,INSERT,UPDATE,DELETE
+    priv: "{{ mysql_dbname }}.*:ALL,GRANT"
     state: present
