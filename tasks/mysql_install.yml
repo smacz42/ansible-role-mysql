@@ -1,5 +1,15 @@
 ---
 
+
+- name: (mysql_install) [2/5] MariaDB repo is added
+  yum_repository:
+    name: mariadb
+    description: MariaDB repo
+    baseurl: http://yum.mariadb.org/{{ mysql_mariadb_version }}/centos7-amd64
+    file: external_repos
+    gpgkey: https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
+  when: mysql_mariadb_version != 5.5
+
 - name: (mysql_install) [1/4] MySQL/MariaDB packages are installed and the latest version
   package:
     name: "{{ item }}"
@@ -19,7 +29,7 @@
     name: "{{ mysql_dbname }}"
     state: present
 
-- name: (mysql_install) [4/4] Mailuser account present for mailserver database
+- name: (mysql_install) [4/4] MySQL database account {{ mysql_dbuser }} is present for database {{ mysql_dbname }}
   mysql_user:
     name: "{{ mysql_dbuser }}"
     password: "{{ mysql_dbpasswd }}"

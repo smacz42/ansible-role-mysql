@@ -3,11 +3,12 @@
 - name: (mysql_config) [1/2] Template {{ mysql_schema }}.sql is deployed
   template:
     src: ../templates/{{ mysql_schema }}.sql.j2
-    dest: /tmp/schema.sql
+    dest: /tmp/{{ mysql_schema }}.sql
 
 - name: (mysql_config) [2/2] Database matches schema
   mysql_db:
+    #name: "{{ mysql_schema }}"
     name: "{{ mysql_dbname }}"
     state: import
-    target: /tmp/schema.sql
+    target: /tmp/{{ mysql_schema }}.sql
   notify: Restart mariadb

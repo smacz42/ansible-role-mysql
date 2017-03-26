@@ -1,3 +1,13 @@
+{#
+# For postfix & dovecot deployment
+postfix_dovecot_mysql_virtual_domains:
+    - { domain_id: example.com, domain_name: example }
+postfix_dovecot_mysql_virtual_users:
+    - { domain_id: example.com, password: example, email: example@example.com }
+postfix_dovecot_mysql_virtual_aliases:
+    - { domain_id: example.com, source: example, email: example@example.com }
+#}
+
 REPLACE INTO `mailserver`.`virtual_domains` (
     `id` ,
     `name`

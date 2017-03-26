@@ -1,18 +1,19 @@
 ---
 
-- name: (mysql_config) [1/3] Template {{ mysql_database }}.sql is deployed
+- name: (mysql_config) [1/3] Templates mysql_databases.sql are deployed
   template:
     src: ../templates/{{ mysql_database }}.sql.j2
-    dest: /tmp/database.sql
+    dest: /tmp/{{ mysql_database }}.sql
 
-- name: (mysql_config) [2/3] Database populated with data
+- name: (mysql_config) [2/3] Database {{ mysql_dbname }} is populated with data
   mysql_db:
     name: "{{ mysql_dbname }}"
     state: import
-    target: /tmp/database.sql
+    target: /tmp/{{ mysql_dbname }}.sql
   notify: Restart mariadb
 
-- name: (mysql_config) [3/3] File {{ mysql_database }}.sql is dispelled
-  file:
-    path: /tmp/database.sql
-    state: absent
+  # Is this even necessary?
+  #- name: (mysql_config) [3/3] File {{ mysql_database }}.sql is dispelled
+  #  file:
+  #    path: /tmp/database.sql
+  #    state: absent

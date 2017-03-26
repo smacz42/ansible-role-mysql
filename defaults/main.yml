@@ -1,15 +1,14 @@
 ---
 
-# core variables mysql
-#mysql_dbuser:
-#mysql_dbpasswd:
-#mysql_dbname:
-#
-## Determines which schema to use in case this is called by another role
-#mysql_schema:
-#mysql_database:
-#
-## For postfix & dovecot deployment
-#postfix_dovecot_mysql_virtual_domains:
-#postfix_dovecot_mysql_virtual_users:
-#postfix_dovecot_mysql_virtual_aliases:
+################################################################################### CHANGEME
+
+mysql_dbuser: 'dbuser'
+mysql_dbpasswd: 'Passw0rd1'
+mysql_dbname: 'database'
+
+#mysql_schema: CHANGEME
+#mysql_database: CHANGEME
+
+################################################################################### SANE DEFAULTS
+
+mysql_mariadb_version: '5.5'
