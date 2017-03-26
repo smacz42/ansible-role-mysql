@@ -1,13 +1,13 @@
 ---
 
-
 - name: (mysql_install) [2/5] MariaDB repo is added
   yum_repository:
     name: mariadb
     description: MariaDB repo
-    baseurl: http://yum.mariadb.org/{{ mysql_mariadb_version }}/centos7-amd64
+    baseurl: http://yum.mariadb.org/{{ mysql_mariadb_version }}/centos7-$basearch/
     file: external_repos
     gpgkey: https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
+    enabled: yes
   when: mysql_mariadb_version != 5.5
 
 - name: (mysql_install) [1/4] MySQL/MariaDB packages are installed and the latest version
@@ -15,7 +15,9 @@
     name: "{{ item }}"
     state: latest
   with_items:
-    - mariadb-server
+    # These need this specific capitalization
+    - MariaDB-server
+    - MariaDB-client
     - MySQL-python
 
 - name: (mysql_install) [2/4] MariaDB enabled on boot
